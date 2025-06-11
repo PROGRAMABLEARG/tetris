@@ -1,1 +1,25 @@
+#include <TM1640.h>
+#include <TM16xxMatrix.h>
 
+TM1640 module(A15, A10);    
+#define MATRIX_NUMCOLUMNS 16
+#define MATRIX_NUMROWS 8
+TM16xxMatrix matrix(&module, MATRIX_NUMCOLUMNS, MATRIX_NUMROWS);
+
+void setup() {
+  matrix.setAll(false);     
+}
+
+void loop() {
+  dibujarL(3,6);// Dibuja una L con vértice en (3,6)
+}
+
+void dibujarL(int x, int y) {
+  // Validación básica para evitar salirse de la matriz
+  if (x < 0 || x > 14 || y < 2 || y > 7) return;
+
+  matrix.setPixel(x, y, true);       // vértice
+  matrix.setPixel(x, y - 1, true);   // parte vertical
+  matrix.setPixel(x, y - 2, true);   // parte vertical
+  matrix.setPixel(x + 1, y - 2, true); // parte horizontal
+}
